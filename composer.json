@@ -1,0 +1,23 @@
+{
+    "name": "cgservices/secrets_cli_php",
+    "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
+    "keywords": ["vault", "dotenv", "environment"],
+    "license" : "BSD-3-Clause-Attribution",
+    "authors" : [
+        {
+            "name": "Sander van Rossum",
+            "email": "sander.van.rossum@cg.nl",
+            "homepage": "https://github.com/cgservices/secrets_cli_php"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.9",
+        "corneltek/cliframework": "*",
+        "jippi/vault-php-sdk": "2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SecretsCli\\": "src/"
+        }
+    }
+}
