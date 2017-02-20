@@ -11,13 +11,13 @@
       $opts->add('k|secrets_storage_key', 'Override secrets_storage_key');
     }
 
-    public function arguments($args) {
-      # XXX: Add a DSL here to support zsh/bash function completion
-      $args->add('file');
-    }
-
-
     public function execute() {
-      $this->getLogger()->info('executing add command.');
+      $vault = new \SecretsCli\Vault();
+      $secrets = $vault->get('secret/cgpay/production');
+      if(!empty($secrets)) {
+        echo $secrets . PHP_EOL;
+      } else {
+        echo 'Received empty response'. PHP_EOL;
+      }
     }
   }

@@ -6,10 +6,13 @@
     const NAME = 'SecretsCli for PHP';
     const VERSION = '1.0.0';
 
+    public static $secrets_dir = '.';
+    public static $secrets_file = '.env';
+
     public function init() {
       parent::init();
-      $this->command('init');
-      $this->command('policies');
+      // $this->command('init');
+      // $this->command('policies');
       $this->command('pull');
       $this->command('push');
       $this->command('read');

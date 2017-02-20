@@ -4,23 +4,36 @@
 
   class Vault {
 
-    protected $sf = false;
+    protected $factory = false;
     protected $vault = false;
 
-    public function __construct() {
-      $options = array();
-      $options['base_uri'] = getenv('VAULT_ADDR');
-      $options['headers']['X-Vault-Token'] = getenv('VAULT_TOKEN');
+    private function factory() {
+      if(!$this->factory) {
+        $options = [
+          'base_uri' => getenv('VAULT_ADDR'),
+          'headers' => [
+            'X-Vault-Token' => getenv('VAULT_TOKEN')
+          ]
+        ];
+        $this->factory = new \Jippi\Vault\ServiceFactory($options);
+      }
+      return $this->factory;
+    }
 
-      $this->sf = new \Jippi\Vault\ServiceFactory($options);
+    private function sys() {
+      return $this->factory()->get('sys');
+    }
+
+    private function data() {
+      return $this->factory()->get('data');
     }
 
     public function unsealed() {
-      return $this->sf->get('sys')->unsealed();
+      return $this->sys()->unsealed();
     }
 
     public function seal() {
-
+      throw new \Exception("Not implemented yet", 1);
     }
 
     public function unseal() {
@@ -31,17 +44,12 @@
     }
 
     public function get($key) {
-
+      $this->unseal();
+      $response = $this->data()->get($key);
+      return json_decode($response->getBody())->data->value;
     }
 
     public function write($key, $value) {
-      $this->sf->get('data')->write($key, array('value' => $value));
-    }
-
-    public function __call($name, $args) {
-      if(is_callable(array($this->vault, $name))) {
-        return call_user_func_array(array($this->vault, $name), $args);
-      }
-      throw new Exception("Undefined method ". $name .", are you not using the direct service objects?", 1);
+      $this->data()->write($key, ['value' => $value]);
     }
   }
