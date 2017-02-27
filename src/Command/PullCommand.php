@@ -16,14 +16,14 @@
 
     public function execute() {
       $vault = new \SecretsCli\Vault();
-      $secrets = $vault->get('secret/cgpay/production');
+      $secrets = $vault->get('secret/'. \SecretsCli\Application::$secrets_key);
       $this->compare($secrets);
       $this->write($secrets);
       return $secrets;
     }
 
     private function compare($secrets) {
-      $secrets_file = \SecretsCli\Application::$secrets_dir .'/'. \SecretsCli\Application::$secrets_file;
+      $secrets_file = \SecretsCli\Application::$secrets_file;
       if(file_exists($secrets_file)) {
         similar_text($secrets, file_get_contents($secrets_file), $percent);
         if($percent < 100) {
@@ -51,9 +51,9 @@
     }
 
     private function write($secrets) {
-      $this->getLogger()->writeln('Writing to '. \SecretsCli\Application::$secrets_dir .'/'. \SecretsCli\Application::$secrets_file);
+      $this->getLogger()->writeln('Writing to '. \SecretsCli\Application::$secrets_file);
 
-      $secrets_file = \SecretsCli\Application::$secrets_dir .'/'. \SecretsCli\Application::$secrets_file;
+      $secrets_file = \SecretsCli\Application::$secrets_file;
       if(!file_exists($secrets_file)){
         touch($secrets_file);
       }

@@ -14,9 +14,9 @@
     }
 
     public function execute() {
-      $secrets = file_get_contents(\SecretsCli\Application::$secrets_dir .'/'. \SecretsCli\Application::$secrets_file);
+      $secrets = file_get_contents(\SecretsCli\Application::$secrets_file);
       $vault = new \SecretsCli\Vault();
-      $vault->write('secret/cgpay/production', $secrets);
+      $vault->write('secret/'. \SecretsCli\Application::$secrets_key, $secrets);
       return true;
     }
   }

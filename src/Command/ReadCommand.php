@@ -13,7 +13,7 @@
 
     public function execute() {
       $vault = new \SecretsCli\Vault();
-      $secrets = $vault->get('secret/cgpay/production');
+      $secrets = $vault->get('secret/'. \SecretsCli\Application::$secrets_key);
       if(!empty($secrets)) {
         echo $secrets . PHP_EOL;
       } else {
