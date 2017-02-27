@@ -16,6 +16,9 @@
         "jippi/vault-php-sdk": "2.0.0",
         "vlucas/phpdotenv": "2.4.0"
     },
+    "bin": [
+        "bin/secrets"
+    ],
     "autoload": {
         "psr-4": {
             "SecretsCli\\": "src/"
