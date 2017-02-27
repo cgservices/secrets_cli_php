@@ -13,7 +13,8 @@
     "require": {
         "php": ">=5.3.9",
         "corneltek/cliframework": "*",
-        "jippi/vault-php-sdk": "2.0.0"
+        "jippi/vault-php-sdk": "2.0.0",
+        "vlucas/phpdotenv": "2.4.0"
     },
     "autoload": {
         "psr-4": {
