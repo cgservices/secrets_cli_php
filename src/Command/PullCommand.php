@@ -23,7 +23,7 @@
     }
 
     private function compare($secrets) {
-      $secrets_file = \SecretsCli\Application::$secrets_file;
+      $secrets_file = getcwd() .'/'. \SecretsCli\Application::$secrets_file;
       if(file_exists($secrets_file)) {
         similar_text($secrets, file_get_contents($secrets_file), $percent);
         if($percent < 100) {
@@ -53,7 +53,7 @@
     private function write($secrets) {
       $this->getLogger()->writeln('Writing to '. \SecretsCli\Application::$secrets_file);
 
-      $secrets_file = \SecretsCli\Application::$secrets_file;
+      $secrets_file = getcwd() .'/'. \SecretsCli\Application::$secrets_file;
       if(!file_exists($secrets_file)){
         touch($secrets_file);
       }
