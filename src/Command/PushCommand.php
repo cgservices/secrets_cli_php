@@ -16,7 +16,7 @@
     public function execute() {
       $secrets = file_get_contents(\SecretsCli\Application::$secrets_file);
       $vault = new \SecretsCli\Vault();
-      $vault->write('secret/'. \SecretsCli\Application::$secrets_key, $secrets);
+      $vault->write(\SecretsCli\Application::$secrets_key . getenv('APPLICATION_ENV'), $secrets);
       return true;
     }
   }
