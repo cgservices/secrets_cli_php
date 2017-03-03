@@ -24,7 +24,7 @@
       }
 
       if(is_writable(getcwd())) {
-        if(file_put_contents(getcwd() .'/.secrets', "# File where your secrets are kept\r\nSECRETS_STORAGE_KEY=$key\r\n\r\n# Vault 'storage_key' where your secrets will be kept\r\nSECRETS_FILE=$file\r\n") !== false) {
+        if(file_put_contents(getcwd() .'/.secrets', "# Vault 'storage_key' where your secrets will be kept\r\nSECRETS_STORAGE_KEY=$key\r\n\r\n# File where your secrets are kept\r\nSECRETS_FILE=$file\r\n") !== false) {
           $this->success('Created .secrets file successfully!');
         } else {
           $this->warning('Failed to write to file, check permissions');
