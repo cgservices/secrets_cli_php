@@ -13,7 +13,7 @@
 
     public function execute() {
       $vault = new \SecretsCli\Vault();
-      $secrets = $vault->get(\SecretsCli\Application::$secrets_key . getenv('APPLICATION_ENV'));
+      $secrets = $vault->get(\SecretsCli\Application::$secrets_key . (getenv('APPLICATION_ENV') || 'development'));
       if(!empty($secrets)) {
         echo $secrets . PHP_EOL;
       } else {
