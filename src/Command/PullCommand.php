@@ -16,7 +16,7 @@
 
     public function execute() {
       $vault = new \SecretsCli\Vault();
-      $secrets = $vault->get(\SecretsCli\Application::$secrets_key . (getenv('APPLICATION_ENV') || 'development'));
+      $secrets = $vault->get(\SecretsCli\Application::secrets_key());
       $this->compare($secrets);
       $this->write($secrets);
       return $secrets;

@@ -9,11 +9,8 @@
     public static $secrets_key = 'secret/project/';
     public static $secrets_file = './.env';
 
-    // public $formatter;
-
     public function init() {
       parent::init();
-      // $this->formatter = new \CLIFramework\Formatter;
 
       $this->command('init');
       // $this->command('policies');
@@ -21,6 +18,12 @@
       $this->command('push');
       $this->command('read');
       // $this->topic('basic');
+    }
+
+    public static function secrets_key() {
+      $env = getenv('APPLICATION_ENV');
+      $env = (empty($env)) ? 'development' : $env ;
+      return self::$secrets_key . $env;
     }
 
     public function info($msg) {
