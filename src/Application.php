@@ -20,9 +20,15 @@
       // $this->topic('basic');
     }
 
-    public static function secrets_key() {
-      $env = getenv('APPLICATION_ENV');
-      $env = (empty($env)) ? 'development' : $env ;
+    public static function secrets_key($env=false) {
+      if($env !== false && empty($env)) {
+        die('Environment argument is empty! Aborting...'. PHP_EOL);
+      }
+      if($env === false) {
+        $env = getenv('APPLICATION_ENV');
+        $env = (empty($env)) ? 'development' : $env ;
+      }
+      echo 'Using "'. $env .'" as application environment'. PHP_EOL;
       return self::$secrets_key . $env;
     }
 
