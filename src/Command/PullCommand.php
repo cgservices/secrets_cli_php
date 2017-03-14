@@ -85,6 +85,6 @@
           die;
         }
       }
-      return getcwd() .'/'. $this->options->{'secrets-file'};
+      return getcwd() .'/'. $secrets_file;
     }
   }
