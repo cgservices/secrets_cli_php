@@ -78,12 +78,7 @@
     private function secrets_file() {
       $secrets_file = \SecretsCli\Application::$secrets_file;
       if($this->options->{'secrets-file'} !== null) {
-        if(file_exists(getcwd() .'/'. $this->options->{'secrets-file'})) {
-          $secrets_file = $this->options->{'secrets-file'};
-        } else {
-          $this->warning('Secrets file "'. $this->options->{'secrets-file'} .'" does not exist, can not continue...');
-          die;
-        }
+        $secrets_file = $this->options->{'secrets-file'};
       }
       return getcwd() .'/'. $secrets_file;
     }
