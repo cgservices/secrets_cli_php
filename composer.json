@@ -11,10 +11,11 @@
         }
     ],
     "require": {
-        "php": ">=5.3.9",
-        "corneltek/cliframework": "*",
+        "php": ">=5.5.0",
+        "corneltek/cliframework": "2.5.4",
         "jippi/vault-php-sdk": "2.0.0",
-        "vlucas/phpdotenv": "2.4.0"
+        "vlucas/phpdotenv": "2.4.0",
+        "ext-json": "*"
     },
     "bin": [
         "bin/secrets"
