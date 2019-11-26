@@ -6,7 +6,7 @@
     const NAME = 'SecretsCli for PHP';
     const VERSION = '1.0.0';
 
-    public static $secrets_key = 'secret/cgpay/';
+    public static $secrets_key = 'secret/project/';
     public static $secrets_file = './.env';
 
     public function init() {
@@ -26,7 +26,6 @@
       }
       if($env === false) {
         $env = getenv('APPLICATION_ENV');
-        var_dump($env);exit;
         $env = (empty($env)) ? 'development' : $env ;
       }
       echo 'Using "'. $env .'" as application environment'. PHP_EOL;
