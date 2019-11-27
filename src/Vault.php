@@ -1,22 +1,31 @@
 <?php
 
-  namespace SecretsCli;
+namespace SecretsCli;
 
-  class Vault {
+use SecretsCli\Vault\ServiceFactory;
+
+class Vault {
 
     protected $factory = false;
     protected $vault = false;
+    protected $method = null;
+    protected $methodKeys = [];
+
+    public function __construct()
+    {
+        $this->method = getenv('VAULT_AUTH_METHOD');
+    }
 
     private function factory() {
-      if(!$this->factory) {
-        $options = [
-          'base_uri' => getenv('VAULT_ADDR'),
-          'headers' => [
-            'X-Vault-Token' => getenv('VAULT_TOKEN')
-          ]
-        ];
-        $this->factory = new \Jippi\Vault\ServiceFactory($options);
-      }
+        if(!$this->factory) {
+            $options = [
+                'base_uri' => getenv('VAULT_ADDR'),
+                'headers' => [
+                  'X-Vault-Token' => getenv('VAULT_AUTH_TOKEN')
+                ]
+            ];
+            $this->factory = new ServiceFactory($options);
+        }
       return $this->factory;
     }
 
@@ -28,8 +37,8 @@
       return $this->factory()->get('data');
     }
 
-    public function unsealed() {
-      return $this->sys()->unsealed();
+    public function github() {
+      return $this->factory()->get('github');
     }
 
     public function seal() {
@@ -44,12 +53,37 @@
     }
 
     public function get($key) {
-      $this->unseal();
-      $response = $this->data()->get($key);
-      return json_decode($response->getBody())->data->value;
+        $response = $this->getAuthClient()->get($key);
+        return $this->extractSecrets($response);
+    }
+
+    private function extractSecrets($response)
+    {
+        $data = json_decode($response->getBody())->data;
+
+        if (property_exists($data, 'secrets')) {
+            return $data->secrets;
+        }
+
+        return $data->value;
+    }
+
+    public function getAuthClient()
+    {
+        if ($this->method != null) {
+            return $this->factory()->get($this->method);
+        }
+
+        return $this->data();
     }
 
     public function write($key, $value) {
-      $this->data()->write($key, ['value' => $value]);
+        $arrayKey = 'value';
+
+        if ($this->method == 'github') {
+            $arrayKey = 'secret';
+        }
+
+        $this->data()->write($key, [$arrayKey => $value]);
     }
-  }
+}
