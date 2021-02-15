@@ -10,10 +10,12 @@ class Vault {
     protected $vault = false;
     protected $method = null;
     protected $methodKeys = [];
+    protected $logger;
 
     public function __construct()
     {
         $this->method = getenv('VAULT_AUTH_METHOD');
+        $this->logger = new Logger();
     }
 
     private function factory() {
@@ -24,7 +26,7 @@ class Vault {
                   'X-Vault-Token' => getenv('VAULT_AUTH_TOKEN')
                 ]
             ];
-            $this->factory = new ServiceFactory($options);
+            $this->factory = new ServiceFactory($options, $this->logger);
         }
       return $this->factory;
     }
