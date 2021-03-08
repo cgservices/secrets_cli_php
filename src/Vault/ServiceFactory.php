@@ -12,7 +12,8 @@ class ServiceFactory
         'sys' => 'Jippi\Vault\Services\Sys',
         'data' => 'Jippi\Vault\Services\Data',
         'auth/token' => 'Jippi\Vault\Services\Auth\Token',
-        'github' => 'SecretsCli\Auth\Github'
+        'github' => 'SecretsCli\Auth\Github',
+        'vault' => 'SecretsCli\Auth\VaultToken',
     ];
 
     private $client;
