@@ -1,0 +1,14 @@
+# Docker ignore file for secrets_cli_php
+.git
+.gitignore
+.github
+vendor/
+.env
+.env.*
+.secrets
+*.log
+.phpunit.cache/
+.idea/
+.vscode/
+*.md
+LICENSE
