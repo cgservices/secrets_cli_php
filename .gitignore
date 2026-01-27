@@ -3,3 +3,8 @@ vendor
 .env.development
 .secrets
 .idea/*
+
+# PHPUnit
+.phpunit.cache/
+coverage.xml
+.coverage/

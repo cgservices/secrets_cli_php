@@ -10,7 +10,10 @@
     public static $secrets_file = './.env';
 
     public function init() {
-      parent::init();
+      // Skip parent::init() to avoid option conflicts in CLIFramework dev commands
+      // (ArchiveCommand defines -c|compress which conflicts with other commands)
+      \CLIFramework\CommandBase::init();
+      $this->command('help', 'CLIFramework\\Command\\HelpCommand');
 
       $this->command('init');
       // $this->command('policies');
